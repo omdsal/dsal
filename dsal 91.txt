@@ -1,0 +1,81 @@
+Name: Omkar.U.Hulawale
+Batch: A2.
+Roll No:12150
+EXP:9.1
+
+I/P:-
+
+#include<iostream>
+#include <climits>
+using namespace std;
+int sum(int frequency[], int i, int j)
+{
+int sum = 0;
+for (int x = i; x <= j; x++)
+sum += frequency[x];
+return sum;
+}
+int optimalCost(int frequency[], int i, int j)
+{
+    int min;
+if (j < i)
+return 0;
+if (j == i)
+return frequency[i];
+int frequencySum = sum(frequency, i, j);
+min = INT_MAX;
+for (int r = i; r <= j; ++r)
+{
+int cost = optimalCost(frequency, i, r - 1) + optimalCost(frequency, r + 1, j);
+if (cost < min)
+min = cost;
+}
+return min + frequencySum;
+}
+int optimalSearchTree(int keys[], int frequency[], int n)
+{
+return optimalCost(frequency, 0, n - 1);
+}
+int main()
+{
+int keys[]={0};
+int n1;
+int frequency[] ={0};
+cout<<"Enter the amount of elements:";
+cin>>n1;
+for(int i=0 ;i<n1;i++){
+	cout<<"\nEnter the element:";
+	cin>>keys[i];
+	cout<<"\nEnter its frequency:";
+	cin>>frequency[i];
+}
+cout <<"\nCost of Optimal BST is"<< optimalSearchTree(keys, frequency, n1);
+return 0;
+}
+
+O/P:-
+
+Enter the amount of elements:5
+
+Enter the element:5
+
+Enter its frequency:1
+
+Enter the element:2
+
+Enter its frequency:1
+
+Enter the element:3
+
+Enter its frequency:2
+
+Enter the element:4
+
+Enter its frequency:3
+
+Enter the element:6
+
+Enter its frequency:4
+
+Cost of Optimal BST is29
+

@@ -1,0 +1,201 @@
+Name: Omkar.U.Hulawale.
+Batch: A2.
+Roll No: 12150
+Exp:4
+
+//I/P:-
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    node* left;
+    node* right;
+    int data;
+};
+
+class linked {
+public:
+    node* t;
+    node* create(int val) {
+        t = new node;
+        t->data = val;
+        t->left = t->right = NULL;
+        return t;
+    }
+
+    node* insert(node* root, int val) {
+        if (root == NULL) {
+            root = create(val);
+        }
+        else if (val <= root->data) {
+            root->left = insert(root->left, val);
+        }
+        else {
+            root->right = insert(root->right, val);
+        }
+        return root;
+    }
+
+    void inorder(node* root) {
+        if (root != NULL) {
+            inorder(root->left);
+            cout << root->data << " ";
+            inorder(root->right);
+        }
+    }
+
+    bool search(node* root, int val) {
+        if (root == NULL) return false;
+        else if (root->data == val) return true;
+        else if (val < root->data) return search(root->left, val);
+        else return search(root->right, val);
+    }
+
+    void swap(node* ptr) {
+        if (ptr == NULL)
+            return;
+        swap(ptr->left);
+        swap(ptr->right);
+        node* t;
+        t = ptr->left;
+        ptr->left = ptr->right;
+        ptr->right = t;
+    }
+
+    node* invert(node* root) {
+        swap(root);
+        return root;
+    }
+
+    int height(node* root) {
+        if (root == NULL) {
+            return -1;
+        }
+        int left = height(root->left);
+        int right = height(root->right);
+        return max(left, right) + 1;
+    }
+
+    void mini(node* root) {
+        node* t = root;
+        while (t->left != NULL) {
+            t = t->left;
+        }
+        cout << "Minimum element is= " << t->data << endl;
+    }
+};
+
+int main() {
+    linked l;
+    node* root = NULL;
+
+    int n;
+    cout << "Enter the number of nodes = ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter the numbers" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    cout << "1. Insert new node" << endl;
+    cout << "2. Display BST" << endl;
+    cout << "3. Minimum element" << endl;
+    cout << "4. Height of BST" << endl;
+    cout << "5. Search element" << endl;
+    cout << "6. Swap left and right nodes" << endl;
+    cout << "0. Exit" << endl;
+    int choice;
+    while (true) {
+        cout << "\nEnter your choice= ";
+        cin >> choice;
+        if (choice == 0)
+            break;
+        switch (choice) {
+        case 1:
+            for (int i = 0; i < n; i++) {
+                root = l.insert(root, arr[i]);
+            }
+            cout << "Do you want to enter another number (y/n) =";
+            char c;
+            cin >> c;
+            if (c == 'y') {
+                int num;
+                cout << "Enter number= ";
+                cin >> num;
+                root = l.insert(root, num);
+            }
+            break;
+        case 2:
+            cout << "Inorder traversal = ";
+            l.inorder(root);
+            cout << " " << endl;
+            break;
+        case 3:
+            l.mini(root);
+            break;
+        case 4:
+            cout << "Height = " << l.height(root) << endl;
+            break;
+        case 5:
+            cout << "Enter the element to search = ";
+            int s;
+            cin >> s;
+            if (l.search(root, s))
+                cout << "Element is present" << endl;
+            else
+                cout << "Element is not present" << endl;
+            break;
+        case 6:
+            root = l.invert(root);
+            break;
+        }
+    }
+
+    return 0;
+}
+
+O/P:-
+/tmp/kl4zEsmfKg.o
+Enter the number of nodes = 5
+Enter the numbers
+67
+89
+09
+34
+65
+1. Insert new node
+2. Display BST
+3. Minimum element
+4. Height of BST
+5. Search element
+6. Swap left and right nodes
+0. Exit
+
+Enter your choice= 1
+Do you want to enter another number (y/n) =y
+Enter number= 32
+
+Enter your choice= 2
+Inorder traversal = 9 32 34 65 67 89  
+
+Enter your choice= 3
+Minimum element is= 9
+
+Enter your choice= 4
+Height = 3
+
+Enter your choice= 5
+Enter the element to search = 9
+Element is present
+
+Enter your choice= 5
+Enter the element to search = 21
+Element is not present
+
+Enter your choice= 6
+
+Enter your choice= 2
+Inorder traversal = 89 67 65 34 32 9  
+
+Enter your choice= 0
